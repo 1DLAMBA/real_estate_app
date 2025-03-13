@@ -46,10 +46,10 @@ INSTALLED_APPS = [
     
     # Local apps
     'accounts',
-    'profiles',
-    'investments',
-    'transactions',
-    'utils',
+    # 'profiles',
+    # 'investments',
+    # 'transactions',
+    # 'utils',
     
 ]
 
