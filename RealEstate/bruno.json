@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "RealEstate",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

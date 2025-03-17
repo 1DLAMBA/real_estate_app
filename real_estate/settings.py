@@ -16,6 +16,15 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Set to 60 minutes instead of default 5
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Set to 1 day
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -47,11 +56,17 @@ INSTALLED_APPS = [
     # Local apps
     'accounts',
     # 'profiles',
-    # 'investments',
+    'investments',
     # 'transactions',
     # 'utils',
     
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -98,6 +113,8 @@ DATABASES = {
     }
 }
 
+# settings.py
+AUTH_USER_MODEL = 'accounts.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

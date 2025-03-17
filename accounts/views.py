@@ -2,6 +2,8 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from .models import NextOfKin
 from .serializers import UserSerializer, NextOfKinSerializer
 
@@ -24,7 +26,7 @@ class UserViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.user_type == 'admin':
             return User.objects.all()
-        return User.objects.filter(id=user.id)
+        return User.objects.all()
     
     @action(detail=False, methods=['get'])
     def me(self, request):
@@ -44,10 +46,12 @@ class UserViewSet(viewsets.ModelViewSet):
         user.save()
         return Response({'message': 'Password changed successfully'})
 
+# @method_decorator(csrf_exempt)
 class RegisterUserView(viewsets.GenericViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = UserSerializer
     
+    # @csrf_exempt
     @action(detail=False, methods=['post'])
     def register(self, request):
         serializer = self.get_serializer(data=request.data)
